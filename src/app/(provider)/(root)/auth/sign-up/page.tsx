@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from 'react';
-import supabase from '../../../../supabase/supabase';
+import supabase from '@/supabase/supabase';
+import { useAuthStore } from '@/zustand/auth.store';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 function SignUpPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPassword, setCheckPassword] = useState("");
+
+    const isLogIn = useAuthStore((state) => state.isLogIn);
+    const isLogOut = useAuthStore((state) => state.isLogOut);
 
     const router = useRouter();
 
@@ -17,9 +21,11 @@ function SignUpPage() {
 
     const result = await supabase.auth.signUp({email, password});
     console.log(result);
-    if(password !== checkPassword) return alert("비밀번호 다시쳐라 김서진");
-
+    if(password !== checkPassword) return alert("정확한 비밀번호를 다시 입력하세요.");
     if(result.data.user) return alert("회원가입 성공")
+
+    console.log(isLogIn);
+    console.log(isLogOut);
 
       router.push("/");
   }

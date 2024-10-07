@@ -1,5 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import Header from './_components/Header'
+
 
 
 function RootLayout({children}: PropsWithChildren) {
